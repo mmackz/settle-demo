@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const APP_URL = 'https://settle-demo.vercel.app';
+const APP_URL = 'https://settle-demo-black.vercel.app';
 
 export async function GET() {
   const manifest = {

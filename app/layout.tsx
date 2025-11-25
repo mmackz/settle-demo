@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const APP_URL = "https://settle-demo.vercel.app";
+const APP_URL = "https://settle-demo-black.vercel.app";
 
 const frameMetadata = {
   version: "next",
