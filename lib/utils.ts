@@ -1,9 +1,9 @@
-import { fromHex, type Address } from 'viem';
+import { fromHex, type Address, type Hex } from 'viem';
 
 /**
  * Decode hex-encoded merchantId from boost actionSteps
  */
-export function decodeMerchantId(hexString: `0x${string}`): string {
+export function decodeMerchantId(hexString: Hex): string {
   return fromHex(hexString, 'string');
 }
 

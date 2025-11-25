@@ -3,7 +3,7 @@
 import { useQuery, useQueries } from '@tanstack/react-query';
 import { useAccount } from 'wagmi';
 import { useBoost } from '@/components/providers/BoostProvider';
-import { getSettleBoosts } from '@/queries/getSettleBoosts';
+import { getBoosts } from '@/queries/getBoosts';
 import { getBoostMerchantId } from '@/queries/getBoostMerchantId';
 import { MERCHANTS } from '@/lib/constants';
 import type { MerchantWithBoost, RewardKitBoost } from '@/types';
@@ -15,14 +15,14 @@ export function useMerchantBoosts() {
   const {
     data: boostsData,
     isLoading: isLoadingBoosts,
-    error: boostsError
-  } = useQuery(getSettleBoosts(address));
+    error: boostsError,
+  } = useQuery(getBoosts(address));
 
   // Add status to each boost based on which array it came from
   const allBoosts: RewardKitBoost[] = [
-    ...(boostsData?.activeBoosts ?? []).map(b => ({ ...b, status: 'active' as const })),
-    ...(boostsData?.claimableBoosts ?? []).map(b => ({ ...b, status: 'claimable' as const })),
-    ...(boostsData?.claimedBoosts ?? []).map(b => ({ ...b, status: 'claimed' as const })),
+    ...(boostsData?.activeBoosts ?? []).map((b) => ({ ...b, status: 'active' as const })),
+    ...(boostsData?.claimableBoosts ?? []).map((b) => ({ ...b, status: 'claimable' as const })),
+    ...(boostsData?.claimedBoosts ?? []).map((b) => ({ ...b, status: 'claimed' as const })),
   ];
 
   const merchantIdQueries = useQueries({

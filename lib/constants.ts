@@ -1,8 +1,4 @@
-import { base } from 'wagmi/chains';
 import type { Merchant } from '@/types';
-
-export const CHAIN = base;
-export const CHAIN_ID = base.id;
 
 export const MERCHANTS: Merchant[] = [
   {

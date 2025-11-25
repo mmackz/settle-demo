@@ -1,17 +1,14 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import type { Address, Hex } from 'viem';
+import type { Address } from 'viem';
 import { usePublicClient, useWriteContract } from 'wagmi';
 import {
-  PayableLimitedSignerValidator,
-  PayableLimitedSignerValidatorV2,
+  boostCoreAbi,
 } from '@boostxyz/sdk';
-import { useBoost } from '@/components/providers/BoostProvider';
-import { boostCoreAbi } from '@/abi/boostCoreAbi';
 import { parseBoostId } from '@/lib/utils';
-import { CHAIN_ID } from '@/lib/constants';
 import type { ClaimSignatureData } from '@/types';
+import { base } from 'wagmi/chains';
 
 export function useClaimIncentive({
   boostId,
@@ -22,10 +19,9 @@ export function useClaimIncentive({
   address?: Address;
   signatureData?: ClaimSignatureData;
 }) {
-  const { core } = useBoost();
   const { boostCoreAddress, boostIndex } = parseBoostId(boostId);
 
-  const publicClient = usePublicClient({ chainId: CHAIN_ID });
+  const publicClient = usePublicClient({ chainId: base.id });
   const { writeContractAsync } = useWriteContract();
 
   return useMutation({
@@ -34,15 +30,6 @@ export function useClaimIncentive({
       if (!address) throw new Error('No connected address');
       if (!publicClient) throw new Error('No public client');
       if (!signatureData) throw new Error('No signature data available');
-
-      const boost = await core.getBoost(boostIndex, { chainId: CHAIN_ID });
-      const validator = boost.validator;
-
-      const claimFee =
-        validator instanceof PayableLimitedSignerValidator ||
-        validator instanceof PayableLimitedSignerValidatorV2
-          ? await validator.getClaimFee()
-          : 0n;
 
       const payload = {
         abi: boostCoreAbi,
@@ -55,8 +42,7 @@ export function useClaimIncentive({
           signatureData.signature,
           signatureData.claimant,
         ] as const,
-        value: claimFee,
-        chainId: CHAIN_ID,
+        value: 0n,
       };
 
       const { request } = await publicClient.simulateContract(payload);
