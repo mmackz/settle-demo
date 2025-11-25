@@ -529,3 +529,16 @@ See `components/merchants/ClaimButton.tsx` for a complete implementation that:
 | `components/merchants/ClaimSuccessModal.tsx` | Success modal with confetti animation |
 | `components/merchants/MerchantCard.tsx` | Displays merchant info with discount badge |
 | `components/merchants/MerchantList.tsx` | Lists merchants with category filtering |
+
+---
+
+## More Resources
+
+### Documentation
+
+- [Boost SDK Overview](https://docs.boost.xyz/v2/boost-sdk/overview) - Official documentation for the Boost SDK
+- [Reward Kit API Reference](https://docs.boost.xyz/v2/api-reference/rewardkit/get-a-users-rewardkit-profile) - API documentation for the Reward Kit endpoint used in this demo
+
+### Need Help?
+
+If you have any questions or need assistance with the Boost integration, please reach out to @mattie_eth or the (Boost <> Settle) group on Telegram 
