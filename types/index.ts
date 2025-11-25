@@ -50,13 +50,35 @@ export interface RewardKitResponse {
 }
 
 // Merchant types
-export interface Merchant {
+export interface MerchantStore {
   id: string;
   name: string;
-  location: string;
-  category: string;
-  discountBadge: string;
-  logoUrl: string;
+  address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  mapsUrl: string | null;
+  isActive: boolean;
+}
+
+export interface MerchantLocation {
+  address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  mapsUrl: string | null;
+}
+
+export interface Merchant {
+  id: string;
+  fid: number;
+  businessName: string;
+  discountPercentage: number;
+  category: string | null;
+  isFeatured: boolean;
+  location: MerchantLocation;
+  stores: MerchantStore[];
+  isActive: boolean;
+  onboardedAt: string;
+  logoUrl?: string;
 }
 
 export interface MerchantWithBoost extends Merchant {

@@ -5,14 +5,22 @@ import { useState } from 'react';
 import { formatUnits } from 'viem';
 import { useMerchantBoosts } from '@/hooks/useMerchantBoosts';
 import { ClaimButton } from './ClaimButton';
-import type { MerchantWithBoost } from '@/types';
+import { ClaimSuccessModal } from './ClaimSuccessModal';
+import type { MerchantWithBoost, RewardKitBoost } from '@/types';
 
-type RewardsSubTab = 'pending' | 'history';
+type RewardsSubTab = 'active' | 'history';
+
+interface ClaimSuccessData {
+  merchant: MerchantWithBoost;
+  boost: RewardKitBoost;
+  txHash: string;
+}
 
 export function RewardsList() {
   const { merchants, isLoading, error } = useMerchantBoosts();
-  const [subTab, setSubTab] = useState<RewardsSubTab>('pending');
+  const [subTab, setSubTab] = useState<RewardsSubTab>('active');
   const [claimedIds, setClaimedIds] = useState<Set<string>>(new Set());
+  const [successData, setSuccessData] = useState<ClaimSuccessData | null>(null);
 
   if (isLoading) {
     return (
@@ -50,11 +58,18 @@ export function RewardsList() {
 
     if (aClaimable && !bClaimable) return -1;
     if (!aClaimable && bClaimable) return 1;
-    return a.name.localeCompare(b.name);
+    return a.businessName.localeCompare(b.businessName);
   });
 
-  const handleClaimed = (merchantId: string) => {
-    setClaimedIds((prev) => new Set([...prev, merchantId]));
+  const handleClaimed = (merchant: MerchantWithBoost, txHash: string) => {
+    if (merchant.boost) {
+      setSuccessData({ merchant, boost: merchant.boost, txHash });
+    }
+    setClaimedIds((prev) => new Set([...prev, merchant.id]));
+  };
+
+  const handleCloseSuccess = () => {
+    setSuccessData(null);
   };
 
   return (
@@ -62,9 +77,9 @@ export function RewardsList() {
       {/* Sub-tabs */}
       <div className="flex gap-2 px-4 pt-4 pb-2">
         <button
-          onClick={() => setSubTab('pending')}
+          onClick={() => setSubTab('active')}
           className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
-            subTab === 'pending'
+            subTab === 'active'
               ? 'bg-white text-black'
               : 'bg-zinc-800 text-zinc-400 hover:text-white'
           }`}
@@ -85,11 +100,11 @@ export function RewardsList() {
 
       {/* Content */}
       <div className="px-4 py-2">
-        {subTab === 'pending' && (
+        {subTab === 'active' && (
           <>
             {sortedPending.length === 0 ? (
               <div className="py-8 text-center">
-                <p className="text-zinc-500 text-sm">No pending rewards</p>
+                <p className="text-zinc-500 text-sm">No active rewards</p>
                 <p className="text-zinc-600 text-xs mt-1">
                   Make purchases at partner shops to earn cashback
                 </p>
@@ -100,7 +115,7 @@ export function RewardsList() {
                   <PendingRewardCard
                     key={merchant.id}
                     merchant={merchant}
-                    onClaimed={() => handleClaimed(merchant.id)}
+                    onClaimed={(txHash) => handleClaimed(merchant, txHash)}
                   />
                 ))}
               </div>
@@ -124,13 +139,24 @@ export function RewardsList() {
           </>
         )}
       </div>
+
+      {/* Success Modal */}
+      {successData && (
+        <ClaimSuccessModal
+          isOpen={!!successData}
+          onClose={handleCloseSuccess}
+          merchant={successData.merchant}
+          boost={successData.boost}
+          txHash={successData.txHash}
+        />
+      )}
     </div>
   );
 }
 
 interface RewardCardProps {
   merchant: MerchantWithBoost;
-  onClaimed?: () => void;
+  onClaimed?: (txHash: string) => void;
 }
 
 function PendingRewardCard({ merchant, onClaimed }: RewardCardProps) {
@@ -158,19 +184,21 @@ function PendingRewardCard({ merchant, onClaimed }: RewardCardProps) {
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="relative h-12 w-12 overflow-hidden rounded-full bg-zinc-800">
-              <Image
-                src={merchant.logoUrl}
-                alt={merchant.name}
-                fill
-                className="object-cover"
-              />
+              {merchant.logoUrl && (
+                <Image
+                  src={merchant.logoUrl}
+                  alt={merchant.businessName}
+                  fill
+                  className="object-cover"
+                />
+              )}
             </div>
             {/* Green indicator */}
             <div className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full bg-green-500 border-2 border-black" />
           </div>
 
           <div className="flex flex-col">
-            <h3 className="font-semibold text-white text-sm">{merchant.name}</h3>
+            <h3 className="font-semibold text-white text-sm">{merchant.businessName}</h3>
             <p className="text-xs text-zinc-500">{cashbackPercent}% cashback</p>
           </div>
         </div>
@@ -186,16 +214,18 @@ function PendingRewardCard({ merchant, onClaimed }: RewardCardProps) {
       <div className="flex items-center justify-between py-3">
         <div className="flex items-center gap-3">
           <div className="relative h-12 w-12 overflow-hidden rounded-full bg-zinc-800">
-            <Image
-              src={merchant.logoUrl}
-              alt={merchant.name}
-              fill
-              className="object-cover"
-            />
+            {merchant.logoUrl && (
+              <Image
+                src={merchant.logoUrl}
+                alt={merchant.businessName}
+                fill
+                className="object-cover"
+              />
+            )}
           </div>
 
           <div className="flex flex-col">
-            <h3 className="font-semibold text-white text-sm">{merchant.name}</h3>
+            <h3 className="font-semibold text-white text-sm">{merchant.businessName}</h3>
             <p className="text-xs text-zinc-500">{cashbackPercent}% cashback</p>
           </div>
         </div>
@@ -231,16 +261,18 @@ function ClaimedRewardCard({ merchant }: RewardCardProps) {
     <div className="flex items-center justify-between py-3 opacity-60">
       <div className="flex items-center gap-3">
         <div className="relative h-12 w-12 overflow-hidden rounded-full bg-zinc-800">
-          <Image
-            src={merchant.logoUrl}
-            alt={merchant.name}
-            fill
-            className="object-cover"
-          />
+          {merchant.logoUrl && (
+            <Image
+              src={merchant.logoUrl}
+              alt={merchant.businessName}
+              fill
+              className="object-cover"
+            />
+          )}
         </div>
 
         <div className="flex flex-col">
-          <h3 className="font-semibold text-white text-sm">{merchant.name}</h3>
+          <h3 className="font-semibold text-white text-sm">{merchant.businessName}</h3>
           <p className="text-xs text-zinc-500">${claimedAmount} claimed</p>
         </div>
       </div>

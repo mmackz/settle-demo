@@ -1,30 +1,93 @@
+import { base } from 'wagmi/chains';
 import type { Merchant } from '@/types';
 
+export const CHAIN = base;
+export const CHAIN_ID = base.id;
+
+// Merchant data matching Settle API structure
 export const MERCHANTS: Merchant[] = [
   {
-    id: '7a95bdd8-0007-44af-8644-18870bddb076',
-    name: 'Cuervo Cafe',
-    location: '3 locations',
-    category: 'Cafes',
-    discountBadge: '-20%',
-    logoUrl: '/merchants/7a95bdd8-0007-44af-8644-18870bddb076.avif',
-  },
-  {
     id: '68546a0d-9d18-4f7b-bb5f-57c34aec618b',
-    name: 'Checkpoint Charlie',
-    location: 'Av. Dorrego 3590, C1425GAZ Cdad. Aut...',
+    fid: 1433069,
+    businessName: 'Checkpoint Charlie',
+    discountPercentage: 20,
     category: 'Restaurants',
-    discountBadge: '-20%',
+    isFeatured: false,
+    location: {
+      address: 'Av. Dorrego 3590, C1425GAZ Cdad. Autónoma de Buenos Aires, Argentina',
+      latitude: null,
+      longitude: null,
+      mapsUrl: 'https://maps.app.goo.gl/3L6531Vay3jTYoPRA',
+    },
+    stores: [],
+    isActive: true,
+    onboardedAt: '2025-11-09T19:05:48.906Z',
     logoUrl: '/merchants/68546a0d-9d18-4f7b-bb5f-57c34aec618b.avif',
   },
   {
-    id: '3c4339fe-7b4a-4f61-a7db-d81b76230a22',
-    name: 'La Bici Cafe',
-    location: 'Zapiola 147, C1426 Cdad. Autonoma de...',
+    id: '7a95bdd8-0007-44af-8644-18870bddb076',
+    fid: 1466351,
+    businessName: 'Cuervo Cafe',
+    discountPercentage: 20,
     category: 'Cafes',
-    discountBadge: '-20%',
+    isFeatured: false,
+    location: {
+      address: null,
+      latitude: null,
+      longitude: null,
+      mapsUrl: null,
+    },
+    stores: [
+      {
+        id: '866efadc-ad14-42af-8e21-af3009d43f9b',
+        name: 'Cuervo Cafe Palermo Off',
+        address: 'Arenales 3339, C1425BEQ Cdad. Autónoma de Buenos Aires',
+        latitude: null,
+        longitude: null,
+        mapsUrl: 'https://maps.app.goo.gl/ronpdxi3fGUfMnEC9',
+        isActive: true,
+      },
+      {
+        id: '682c8a44-e82e-4e1c-b1e9-33eaf4170a79',
+        name: 'Cuervo Cafe El salvador',
+        address: 'El Salvador 4580, C1414 Cdad. Autónoma de Buenos Aires',
+        latitude: null,
+        longitude: null,
+        mapsUrl: 'https://maps.app.goo.gl/3vmmda9wjLC7uHmu7',
+        isActive: true,
+      },
+      {
+        id: 'a26d471f-ede0-4da3-bb2b-d6a0d7b6238e',
+        name: 'Cuervo Cafe Costa Rica',
+        address: 'Costa Rica 5801, C1414 Cdad. Autónoma de Buenos Aires',
+        latitude: null,
+        longitude: null,
+        mapsUrl: 'https://maps.app.goo.gl/oqiWpii7SXQv3KJD8',
+        isActive: true,
+      },
+    ],
+    isActive: true,
+    onboardedAt: '2025-11-11T21:54:36.698Z',
+    logoUrl: '/merchants/7a95bdd8-0007-44af-8644-18870bddb076.avif',
+  },
+  {
+    id: '3c4339fe-7b4a-4f61-a7db-d81b76230a22',
+    fid: 1432636,
+    businessName: 'La Bici Cafe',
+    discountPercentage: 20,
+    category: 'Cafes',
+    isFeatured: false,
+    location: {
+      address: 'Zapiola 147, C1426 Cdad. Autónoma de Buenos Aires, Argentina',
+      latitude: null,
+      longitude: null,
+      mapsUrl: 'https://maps.app.goo.gl/Dd4zZ6BWCQinFvod8',
+    },
+    stores: [],
+    isActive: true,
+    onboardedAt: '2025-11-07T20:28:25.608Z',
     logoUrl: '/merchants/3c4339fe-7b4a-4f61-a7db-d81b76230a22.avif',
   },
-] as const;
+];
 
 export const CATEGORIES = ['All', 'Restaurants', 'Cafes'] as const;

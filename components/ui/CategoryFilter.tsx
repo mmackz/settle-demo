@@ -35,7 +35,7 @@ export function CategoryFilter({ onCategoryChange }: CategoryFilterProps) {
         <button
           key={category}
           onClick={() => handleClick(category)}
-          className={`flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium transition-colors border ${
+          className={`flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors border ${
             selected === category
               ? 'bg-white text-black border-white'
               : 'bg-transparent text-zinc-400 border-zinc-700 hover:border-zinc-500'

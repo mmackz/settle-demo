@@ -11,7 +11,7 @@ import { CHAIN_ID } from '@/lib/constants';
 
 interface ClaimButtonProps {
   boost: RewardKitBoost;
-  onSuccess?: () => void;
+  onSuccess?: (txHash: string) => void;
 }
 
 export function ClaimButton({ boost, onSuccess }: ClaimButtonProps) {
@@ -36,8 +36,8 @@ export function ClaimButton({ boost, onSuccess }: ClaimButtonProps) {
     if (isSuccess && txHash && address && !hasHandledSuccess.current) {
       hasHandledSuccess.current = true;
       optimisticallyUpdateAfterClaim(queryClient, address, boost.id, txHash);
+      onSuccess?.(txHash);
       setTxHash(null);
-      onSuccess?.();
     }
   }, [isSuccess, txHash, address, queryClient, boost.id, onSuccess]);
 
