@@ -539,6 +539,17 @@ See `components/merchants/ClaimButton.tsx` for a complete implementation that:
 - [Boost SDK Overview](https://docs.boost.xyz/v2/boost-sdk/overview) - Official documentation for the Boost SDK
 - [Reward Kit API Reference](https://docs.boost.xyz/v2/api-reference/rewardkit/get-a-users-rewardkit-profile) - API documentation for the Reward Kit endpoint used in this demo
 
+### Budget Account Setup
+
+Before you can use this integration, you'll need to update the BUDGET_ACCOUNT used in the boost API query with your own budget account address. This is the account you'll deploy your incentives from. (see `queries/getBoosts.ts` for an example)
+
+```typescript
+// queries/getBoosts.ts
+const BUDGET_ACCOUNT = '0xYOUR_BUDGET_ACCOUNT_ADDRESS';
+```
+
+We'll be available to help you set this up and walk you through using the Boost Developer Portal to deploy your boosts. Reach out to us (see contact info below) and we'll guide you through the process.
+
 ### Need Help?
 
 If you have any questions or need assistance with the Boost integration, please reach out to @mattie_eth or the (Boost <> Settle) group on Telegram 

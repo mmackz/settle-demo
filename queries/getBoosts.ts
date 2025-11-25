@@ -3,6 +3,8 @@ import { type Address, isAddress } from 'viem';
 import type { RewardKitResponse } from '@/types';
 
 const API_URL = 'https://api-v2.boost.xyz';
+
+// This is the budget account for Scout. Replace with your budget account once deployed.
 const BUDGET_ACCOUNT = '0x1a3e67ace4bf9969f4ce48a65cd8653a24b10983';
 
 export const getBoosts = (claimantAddress?: Address) => {
