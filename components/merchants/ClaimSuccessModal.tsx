@@ -127,7 +127,7 @@ export function ClaimSuccessModal({
                 <span className="text-2xl font-bold text-green-400">
                   +{rewardAmount}
                 </span>
-                <span className="text-lg text-green-400">{tokenSymbol}</span>
+                <span className="text-2xl font-bold text-green-400">{tokenSymbol}</span>
                 {tokenImageUri && (
                   <Image
                     src={tokenImageUri}
