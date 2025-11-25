@@ -61,11 +61,14 @@ export function useMerchantBoosts() {
     };
   });
 
+  const claimableCount = boostsData?.claimableBoosts?.length ?? 0;
+
   return {
     merchants: merchantsWithBoosts,
     isLoading: isLoadingBoosts || isLoadingMerchantIds,
     error: boostsError,
     totalClaimableUsd: boostsData?.totalClaimableAmountUsd ?? 0,
     totalClaimedUsd: boostsData?.totalClaimedAmountUsd ?? 0,
+    claimableCount,
   };
 }

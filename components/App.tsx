@@ -10,6 +10,7 @@ import { MerchantList } from './merchants/MerchantList';
 import { RewardsList } from './merchants/RewardsList';
 import { BottomNavigation } from './ui/BottomNavigation';
 import { useFarcaster } from './providers/FarcasterProvider';
+import { useMerchantBoosts } from '@/hooks/useMerchantBoosts';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<'Shops' | 'Rewards'>('Shops');
@@ -17,6 +18,7 @@ export function App() {
   const { isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { isLoaded } = useFarcaster();
+  const { claimableCount } = useMerchantBoosts();
 
   if (!isLoaded) {
     return (
@@ -52,6 +54,7 @@ export function App() {
       <TabNavigation
         activeTab={activeTab}
         onTabChange={(tab) => setActiveTab(tab as 'Shops' | 'Rewards')}
+        claimableCount={claimableCount}
       />
 
       {activeTab === 'Shops' ? (
