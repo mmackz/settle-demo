@@ -45,7 +45,6 @@ export function MerchantList({ categoryFilter = 'All' }: MerchantListProps) {
         <MerchantCard
           key={merchant.id}
           merchant={merchant}
-          cashbackPercent={merchant.boost?.incentives[0]?.rewardPercentage}
         />
       ))}
     </div>
