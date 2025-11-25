@@ -232,7 +232,7 @@ function PendingRewardCard({ merchant, onClaimed }: RewardCardProps) {
 
         {maxRewardFormatted && (
           <div className="flex items-center gap-1.5">
-            <span className="text-sm text-zinc-500">up to</span>
+            <span className="text-xs text-zinc-500">up to</span>
             <span className="text-base text-white font-semibold">{maxRewardFormatted}</span>
             {incentive?.tokenImageUri && (
               <Image
