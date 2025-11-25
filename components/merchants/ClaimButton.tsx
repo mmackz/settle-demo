@@ -7,7 +7,7 @@ import type { Hash } from 'viem';
 import { useClaimIncentive } from '@/mutations/useClaimIncentive';
 import { optimisticallyUpdateAfterClaim } from '@/mutations/useOptimisticUpdate';
 import type { RewardKitBoost } from '@/types';
-import { CHAIN_ID } from '@/lib/constants';
+import { base } from 'wagmi/chains';
 
 interface ClaimButtonProps {
   boost: RewardKitBoost;
@@ -29,7 +29,7 @@ export function ClaimButton({ boost, onSuccess }: ClaimButtonProps) {
 
   const { isLoading: isWaitingForReceipt, isSuccess } = useWaitForTransactionReceipt({
     hash: txHash ?? undefined,
-    chainId: CHAIN_ID,
+    chainId: base.id,
   });
 
   useEffect(() => {

@@ -2,8 +2,8 @@ import { queryOptions } from '@tanstack/react-query';
 import { type Address, isAddress } from 'viem';
 import type { RewardKitResponse } from '@/types';
 
-const API_URL = process.env.NEXT_PUBLIC_BOOST_API_URL!;
-const BUDGET_ACCOUNT = process.env.NEXT_PUBLIC_BOOST_BUDGET_ACCOUNT!;
+const API_URL = 'https://api-v2.boost.xyz';
+const BUDGET_ACCOUNT = '0x1a3e67ace4bf9969f4ce48a65cd8653a24b10983';
 
 export const getBoosts = (claimantAddress?: Address) => {
   const normalizedAddress = claimantAddress?.toLowerCase() ?? '0x';
@@ -25,5 +25,10 @@ export const getBoosts = (claimantAddress?: Address) => {
     enabled,
     staleTime: 1000 * 15,
     refetchInterval: 1000 * 30,
+    // In production, refetch this query after a payment is made to a merchant 
+    // (instead of using refetchInterval) to show the new claimable reward.
+    // Add a delay (e.g., 3-5 seconds) to allow the backend to process the payment
+    // before invalidating the query:
+    // setTimeout(() => queryClient.invalidateQueries({ queryKey: ['boosts'] }), 5000)
   });
 };
