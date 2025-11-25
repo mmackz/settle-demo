@@ -75,23 +75,23 @@ export function RewardsList() {
   return (
     <div className="flex flex-col">
       {/* Sub-tabs */}
-      <div className="flex gap-2 px-4 pt-4 pb-2">
+      <div className="flex gap-3 px-4 pt-4 pb-2">
         <button
           onClick={() => setSubTab('active')}
-          className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+          className={`px-4 py-2 text-sm font-medium rounded-full transition-colors border ${
             subTab === 'active'
-              ? 'bg-white text-black'
-              : 'bg-zinc-800 text-zinc-400 hover:text-white'
+              ? 'bg-white text-black border-white'
+              : 'bg-transparent text-zinc-400 border-zinc-700 hover:border-zinc-500'
           }`}
         >
           Active{pendingMerchants.length > 0 && ` (${pendingMerchants.length})`}
         </button>
         <button
           onClick={() => setSubTab('history')}
-          className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+          className={`px-4 py-2 text-sm font-medium rounded-full transition-colors border ${
             subTab === 'history'
-              ? 'bg-white text-black'
-              : 'bg-zinc-800 text-zinc-400 hover:text-white'
+              ? 'bg-white text-black border-white'
+              : 'bg-transparent text-zinc-400 border-zinc-700 hover:border-zinc-500'
           }`}
         >
           History{claimedMerchants.length > 0 && ` (${claimedMerchants.length})`}
