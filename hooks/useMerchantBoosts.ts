@@ -52,6 +52,8 @@ export function useMerchantBoosts() {
     }
   });
 
+  // Make sure merchants are loaded before matching them with boosts. The boost-to-merchant
+  // matching depends on having the merchant IDs available to join against.
   const merchantsWithBoosts: MerchantWithBoost[] = MERCHANTS.map((merchant) => {
     const boost = merchantIdToBoost.get(merchant.id) ?? null;
     return {
