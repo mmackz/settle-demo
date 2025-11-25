@@ -18,18 +18,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://settle-demo.vercel.app";
+const APP_URL = "https://settle-demo.vercel.app";
 
 const frameMetadata = {
   version: "next",
-  imageUrl: `${APP_URL}/og-image.png`,
+  imageUrl: `${APP_URL}/icon.png`,
   button: {
     title: "View Rewards",
     action: {
       type: "launch_frame",
       name: "Settle Demo",
       url: APP_URL,
-      splashImageUrl: `${APP_URL}/splash.png`,
+      splashImageUrl: `${APP_URL}/icon.png`,
       splashBackgroundColor: "#000000",
     },
   },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Settle Demo",
     description: "Earn cashback rewards at local merchants",
-    images: [`${APP_URL}/og-image.png`],
+    images: [`${APP_URL}/icon.png`],
   },
   other: {
     "fc:frame": JSON.stringify(frameMetadata),
