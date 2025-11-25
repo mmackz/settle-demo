@@ -12,7 +12,7 @@ export async function GET() {
       homeUrl: APP_URL,
       splashImageUrl: `${APP_URL}/icon.png`,
       splashBackgroundColor: '#000000',
-      subtitle: 'Earn cashback at local merchants',
+      subtitle: 'Earn cashback',
     },
   };
 
