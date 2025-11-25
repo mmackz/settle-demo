@@ -9,7 +9,7 @@ export function optimisticallyUpdateAfterClaim(
   txHash: Hash
 ) {
   const normalizedAddress = address.toLowerCase() as Address;
-  const queryKey = ['settleBoosts', { address: normalizedAddress }];
+  const queryKey = ['boosts', { address: normalizedAddress }];
 
   queryClient.cancelQueries({ queryKey });
 
